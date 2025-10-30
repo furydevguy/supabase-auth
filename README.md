@@ -95,4 +95,4 @@ nfl-game-tracker/
 - The app filters for games that are currently in progress, recently finished, or in timeout
 - Player names and numbers are displayed when available
 - The UI is fully responsive and works on mobile devices
-- All API calls are made through the Express backend to avoid CORS issues
+- All API calls are made through the Express backend to avoid CORS issues# nfl-supabase
