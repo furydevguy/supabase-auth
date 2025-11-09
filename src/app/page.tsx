@@ -16,6 +16,9 @@ import {
 import { Spinner } from '@/components/ui/spinner';
 import { Calendar as CalendarIcon } from "lucide-react";
 import { format } from "date-fns";
+import { createClient } from '@supabase/supabase-js';
+import { getSupabaseClient } from '@/lib/supabaseClient';
+import { redirect } from 'next/navigation';
 
 interface Team {
   id: string;
@@ -369,7 +372,7 @@ function generateMockFootballMatches(date: string): Game[] {
   });
 }
 
-export default function Home() {
+export default  function Home() {
   const [gamesData, setGamesData] = useState<GamesResponse | null>(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -377,6 +380,9 @@ export default function Home() {
   const [selectedGame, setSelectedGame] = useState<Game | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [showRaw, setShowRaw] = useState(false);
+
+  // const {data : {user}} = await supabase.auth.getUser();
+  // if (!user) redirect("/auth/sign-in"); 
   const fetchGamesByDate = (date: Date) => {
     setLoading(true);
     setError(null);

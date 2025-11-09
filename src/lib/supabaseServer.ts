@@ -11,19 +11,19 @@ export function getSupabaseServer() {
 
     return createServerClient(supabaseUrl, supabaseAnonKey, {
         cookies: {
-            get(name: string) {
-                return cookieStore.get(name)?.value;
+            async get(name: string) {
+                return (await cookieStore).get(name)?.value;
             },
-            set(name: string, value: string, options: CookieOptions) {
+            async set(name: string, value: string, options: CookieOptions) {
                 try {
-                    cookieStore.set({ name, value, ...options });
+                    (await cookieStore).set({ name, value, ...options });
                 } catch {
                     // ignore during edge/runtime where headers may be locked
                 }
             },
-            remove(name: string, options: CookieOptions) {
+            async remove(name: string, options: CookieOptions) {
                 try {
-                    cookieStore.set({ name, value: "", ...options });
+                    (await cookieStore).set({ name, value: "", ...options });
                 } catch {
                     // ignore during edge/runtime where headers may be locked
                 }

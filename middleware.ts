@@ -28,21 +28,8 @@ export async function middleware(req: NextRequest) {
     const url = req.nextUrl.clone();
     const pathname = url.pathname;
 
-    const isAuthRoute = pathname.startsWith("/auth/");
-
-    // Define protected paths (adjust as you add features)
-    const protectedPrefixes = ["/account"]; 
-    const isProtected = protectedPrefixes.some((p) => pathname.startsWith(p));
-
-    // Redirect unauthenticated users attempting to access protected routes
-    if (isProtected && !session) {
-        url.pathname = "/auth/sign-in";
-        url.searchParams.set("redirect", pathname);
-        return NextResponse.redirect(url);
-    }
-
-    // Redirect authenticated users away from auth pages
-    if (isAuthRoute && session) {
+    // Only allow unauthenticated users to access the root page
+    if (!session && pathname !== "/") {
         url.pathname = "/";
         url.searchParams.delete("redirect");
         return NextResponse.redirect(url);
